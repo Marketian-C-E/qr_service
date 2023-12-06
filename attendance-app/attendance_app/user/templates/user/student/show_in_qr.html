@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        .centered-div {
+          display: flex;
+          justify-content: center;
+          height: 100vh;
+        }
+        .center-content {
+          text-align: center;
+        }
+    </style>
+
+    <title>입실 QR</title>
+
+</head>
+<body>
+    {% include 'home/navbar.html' %}
+    
+    <div class="container p-3">
+      <a class="btn btn-primary" href="{% url 'home:home' %}" role="button">메인 페이지로 가기</a>
+        <div class="centered-div">
+          <div class="text-center">
+          </div>
+            <div class="center-content">
+              <br><br><br>
+
+              <h1><b>{{user.student.name}} 님의 입실 QR</b></h1>
+              
+              
+              <img class="p-3" src="{{user.student.qr_code.url}}" alt="qr_example.png">
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script>
+    // 유효성 검사
+    function validate_value() {
+      var birthdateInput = document.getElementById('birthdate');
+      var birthdateValue = birthdateInput.value;
+      
+      var idInput = document.getElementById('id');
+      var idValue = idInput.value;
+
+
+
+      // 아이디 유효성 검사 확인
+            if (!/^[a-zA-Z0-9]+$/.test(idValue)) {
+        alert('ID는 영문자와 숫자로만 이루어져야 합니다.');
+        return false; // Prevent form submission
+      }
+
+      
+      // 생년월일 유효성 검사 확인
+      if (!/^\d{6}$/.test(birthdateValue)) {
+        alert('생년월일 6자로 입력해주세요 ex) 990812 ');
+        return false; // Prevent form submission
+      }
+  
+      return true; // Allow form submission
+    }
+  </script>
+
+  <title>계정 생성</title>
+</head>
+<body>
+    {% include 'home/navbar.html' %}
+
+    <div class="container">
+
+    <!-- 오류 메시지 처리 ex) 비밀번호 오류 등 -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-warning" role="alert" style="text-align: center;">
+          <b>비밀번호는 다음을 만족해야합니다.</b> <br>
+          <hr>
+          <i>최소 8자 이상</i> <br>
+          <i>영어, 숫자, 특수문자의 조합</i> <br>
+          <i>aaa, abc123과 같은 단순한 글자 조합이 아니여야함.</i> <br>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h1>학생 계정 생성</h>
+            </div>
+
+            <div class="card-body">
+              <form method="post">
+                {% csrf_token %}
+                
+                <!-- User 정보 입력 -->
+                {{ signup_form.as_p }}
+              
+                <!-- Client 정보 입력 -->
+                {{ client_form.as_p }}
+              
+                <input class="btn btn-primary" type="submit" value="가입하기">
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+  
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>내 정보</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <a class="btn btn-secondary" href="{% url 'home:home' %}" role="button">메인 페이지로</a>
+
+      <br><br>
+
+      <h1><b>내 정보</b></h1>
+
+      <br><br>
+      <a class="btn btn-primary" href="{% url 'user:edit_student' %}" role="button">개인정보 수정</a>
+
+      <a class="btn btn-warning" href="{% url 'user:edit_password' %}" role="button">비밀번호 수정</a>
+      
+      <br><hr><br>
+      ID : {{ user.username }} <br><br>
+
+      이름: {{ user.student.name }} <br><br>
+
+      <!-- 성별 표시 -->
+      {% if user.student.gender == 'M' %}
+        성별: 남 <br><br>
+
+      {% elif user.student.gender == 'F' %}
+        성별: 여 <br><br>
+
+      {% else %}
+        성별: 기타 <br><br>
+      {% endif %}
+
+      생년월일: {{ user.student.birth_date }} <br><br><br>
+      
+      
+      
+      
+      <br><br><br><br><hr><br>
+
+      <a class="btn btn-danger" href="{% url 'user:delete_student' %}" role="button">회원 탈퇴</a>
+
+  </div>
+</body>
+</html>

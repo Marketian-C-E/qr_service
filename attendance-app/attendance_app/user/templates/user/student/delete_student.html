@@ -1,0 +1,72 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>내정보 수정</title>
+
+  
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <a class="btn btn-secondary" href="{% url 'user:student_detail' %}" role="button">메인 페이지로</a>
+
+      <br><br><br><br>
+
+    <h1>
+        <b>
+            회원탈퇴
+        </b>
+    </h1>
+
+      <br><br>
+    
+      <!-- 경고문 -->
+      <h3 style="color: red;">
+        <b>
+            ※계정이 한 번 삭제되면 복구할 수 없습니다.
+
+        </b>
+        
+      </h3>
+
+      <br>
+      {% if error_message %}
+      <h4>
+        회원탈퇴를 원하시면, 비밀번호를 입력하세요.
+      </h4>
+      {% endif %}
+      <br>
+
+      {% if error_message %}
+      <div class="alert alert-danger" role="alert">
+        {{ error_message }}
+      </div>
+      <br>
+      {% endif %}
+
+      <form method="POST" action="{% url 'user:delete_student' %}">
+          {% csrf_token %}
+          <label for="password">비밀번호:</label>
+          <input type="password" id="password" placeholder="비밀번호 입력" name="password">
+          <br><br>
+          <hr><br>
+          
+          <button class="btn btn-danger" type="submit">회원탈퇴</button>
+      </form>
+
+
+
+      <!-- 내용 -->
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% load static %}
+<head>
+
+</head>
+<body>
+<div>{{student.name}}님</div>
+{% if late_check == True %}
+<p style="color: green;">정상 입실 </p>
+<div>처리 되었습니다.</div>
+<div>출입 시간 : {{classAttend.start_at}}</div>
+{% else %}
+<p style="color: red;">지각 입실 </p>
+<div>처리 되었습니다.</div>
+<div>출입 시간 : {{classAttend.start_at}}</div>
+{% endif %}
+<div id="timer"></div>
+
+</body>
+<script>
+    var countdown = 5; // 시작 카운트다운 값
+    var timerElement = document.getElementById('timer');
+    var status = {% if status %}true{% else %}false{% endif %};
+
+    function updateTimer() {
+        timerElement.innerText = countdown;
+        countdown--;
+
+        if (countdown < 0) {
+            var redirectUrl = "{% url 'course:QRScanner_in' course.pk %}";
+            window.location.href = redirectUrl; // 이동할 페이지의 URL
+        } else {
+        setTimeout(updateTimer, 1000);
+        }
+    }
+
+    updateTimer();
+</script>

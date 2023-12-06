@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>로그인</title>
+</head>
+<body>
+    {% include 'home/navbar.html' %}
+
+
+    
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Login</h4>
+                </div>
+                
+                <div class="card-body">
+                  {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                  {% endif %}
+
+                  <form action="{% url 'home:login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user"
+                            id="username" name="username" placeholder="아이디">
+                    </div>
+
+                    <br>
+                    
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-user"
+                            id="password" name="password" placeholder="비밀번호">
+                    </div>
+
+                    <br>
+
+                    <button type="submit" class="btn btn-primary btn-user btn-block">로그인</button>
+                    {% if error_message %}
+                        <p class="error-message" style="color: red;">{{ error_message }}</p>
+                    {% endif %}
+                </form>
+
+
+                </div>
+                <div class="card-footer">
+                  <p class="text-center">계정이 없으신가요? 만드세요! <a href="{% url 'user:signup' %}">계정 생성</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</body>
+</html>

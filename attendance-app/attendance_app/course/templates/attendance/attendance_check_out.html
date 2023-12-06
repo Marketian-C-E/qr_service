@@ -1,0 +1,31 @@
+{% load static %}
+<head>
+
+</head>
+<body>
+<div>{{student.name}}님</div>
+<div>정상 퇴실 처리 되었습니다.</div>
+<div>수고하셧습니다.</div>
+<div>퇴실 시간 : {{classAttend.end_at}}</div>
+<div id="timer"></div>
+    
+</body>
+<script>
+    var countdown = 5; // 시작 카운트다운 값
+    var timerElement = document.getElementById('timer');
+    var status = {% if status %}true{% else %}false{% endif %};
+
+    function updateTimer() {
+        timerElement.innerText = countdown;
+        countdown--;
+
+        if (countdown < 0) {
+            var redirectUrl = "{% url 'course:QRScanner_out' course.pk %}";
+            window.location.href = redirectUrl; // 이동할 페이지의 URL
+        } else {
+        setTimeout(updateTimer, 1000);
+        }
+    }
+
+    updateTimer();
+</script>

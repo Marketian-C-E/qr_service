@@ -1,0 +1,63 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>강의 추가</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <h1><b>강의 추가</b></h1>
+
+      <form method="post">
+        {% csrf_token %}
+        <a class="btn btn-secondary" href="javascript:history.back()" role="button">강의 목록으로</a>
+        <button type="submit" class="btn btn-primary">강의 생성</button>
+        <br><hr><br>
+
+        <div class="row">
+          <!-- 강의(강좌) 추가 폼 -->
+          <div class="col-6">
+            <h3>강의 정보 입력!</h3>
+            <br><br>
+
+            {% for field in course_form %}
+            <div class="row">
+              <div class="col-6">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+              </div>
+            </div>
+            <br>
+            {% endfor %}
+          </div>
+
+          <!-- 그 강의에 대한 설문 양식 폼 -->
+          <div class="col-6">
+            <h3>설문조사 질문 입력!</h3>
+            <br><br>
+             
+            {% for field in survey_form %}
+            <div class="row">
+              <div class="col-6">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+              </div>
+            </div>
+            <br>
+            {% endfor %}
+          </div>
+        </div>
+        
+        
+      </form>
+
+
+  </div>
+</body>
+</html>

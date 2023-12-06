@@ -1,0 +1,60 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>관리자 페이지</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <a class="btn btn-secondary" href="{% url 'user:admin_home' %}" role="button">관리자 페이지로</a>
+
+      <br><br>
+
+      <h1><b>전체 분반 목록</b></h1>
+
+      <br><br><br>
+      <a class="btn btn-primary" href="{% url 'user:create_division' %}" role="button">분반 추가</a>
+
+      
+      <br><br>
+      <br><br><br>
+
+
+      클릭하면 해당 분반의 강의 정보가 보여요
+
+      <br><br>
+
+      <ul class="list-group">
+        {% for d in division %}
+
+          <div class="row">
+            <div class="col-9">
+              <div class="list-group">
+                <a href="{% url 'course:course_list' d.pk %}" class="list-group-item list-group-item-action">
+                  {{ d }}
+                </a>
+              </div>
+
+            </div>
+
+            <div class="col-3">
+              <a class="btn btn-info" href="{% url 'user:edit_division' d.pk %}" role="button">수정</a>
+              <a class="btn btn-danger" href="{% url 'user:delete_division' d.pk %}" role="button">삭제</a>
+            </div>
+          </div>
+          
+          <br>
+          
+        {% endfor %}
+      </ul>
+
+
+  </div>
+</body>
+</html>

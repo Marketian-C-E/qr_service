@@ -1,0 +1,38 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>출석 - 강의 목록</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <br><br>
+
+      <h1><b>출석 -- {{division.name}} -- 강의 목록</b></h1>
+
+      <br>
+      출석정보를 확인할 강의를 선택하세요.
+      <br><br>
+
+
+      <div class="list-group">
+        {% for c in course %}
+          <a href="{% url 'course:attendance_course_board' c.pk %}" class="list-group-item list-group-item-action">
+            [{{ c.division_name }}] <b>{{ c.course_name }}</b> (강사: {{ c.teacher_name }}) - <i>수업시간: {{ c.hours }}시간</i>
+          
+        </a>
+        {% endfor %}
+      </div>
+
+
+
+
+  </div>
+</body>
+</html>

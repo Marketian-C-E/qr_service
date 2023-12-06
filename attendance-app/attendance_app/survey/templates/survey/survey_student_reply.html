@@ -1,0 +1,316 @@
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <a class="btn btn-secondary" href="{% url 'home:home' %}" role="button">메인 페이지로</a>
+        <h2>
+            <b>{{ student.name }}</b> 님 <br>
+            <b>{{ student_course.course_name }}</b>에 대한 강의 평가를 해주세요
+
+
+        </h2>
+        
+        
+        <h3 style="color: red">
+            <b>
+                * 강의평가는 필수로 제출하셔야 정상 퇴실 처리 됩니다.
+            </b>
+    
+        </h3>
+        <hr>
+        <form method="POST" action="{% url 'survey:survey_student_submit' %}">
+            {% csrf_token %}
+            
+            <input type="hidden" name="student_id" value="{{ student.id }}">
+            <input type="hidden" name="survey_id" value="{{ course_survey.id }}">
+            
+            <br>
+            
+            <!-- 설문문항 1 start -->
+            {% if course_survey.question1 != None and course_survey.question1 != '' %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question1 }}
+                </b>
+            
+            </p>
+            <!-- 답변 -->
+            <textarea placeholder="질문1 문항 입력해주세요" name="reply1" id="reply1" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항1 end -->
+            
+
+            <!-- 설문 문항2 start -->
+            <!-- 질문 -->
+            {% if course_survey.question2 != None and course_survey.question2 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question2 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문2 문항 입력해주세요" name="reply2" id="reply2" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 2 end -->
+            
+
+            <!-- 설문 문항 3 start -->
+            {% if course_survey.question3 != None and course_survey.question3 != '' %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question3 }}
+                </b>
+                
+            </p>
+            <!-- 답변 -->
+            <textarea placeholder="질문3 문항 입력해주세요" name="reply3" id="reply3" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+            <!-- 설문 문항 3 end -->
+
+
+
+            <!-- 설문 문항4 start -->
+            <!-- 질문 -->
+            {% if course_survey.question4 != None and course_survey.question4 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question4 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문4 문항 입력해주세요" name="reply4" id="reply4" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 4 end -->
+
+
+
+            <!-- 설문 문항5 start -->
+            <!-- 질문 -->
+            {% if course_survey.question5 != None and course_survey.question5 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question5 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문5 문항 입력해주세요" name="reply5" id="reply5" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 5 end -->
+
+
+
+            <!-- 설문 문항 6 start -->
+            <!-- 질문 -->
+            {% if course_survey.question6 != None and course_survey.question6 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question6 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문6 문항 입력해주세요" name="reply6" id="reply6" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 6 end -->
+
+
+
+            <!-- 설문 문항7 start -->
+            <!-- 질문 -->
+            {% if course_survey.question7 != None and course_survey.question7 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question7 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문7 문항 입력해주세요" name="reply7" id="reply7" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 7 end -->
+
+
+            <!-- 설문 문항8 start -->
+            <!-- 질문 -->
+            {% if course_survey.question8 != None and course_survey.question8 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question8 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문8 문항 입력해주세요" name="reply8" id="reply8" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 8 end -->
+
+
+            <!-- 설문 문항9 start -->
+            <!-- 질문 -->
+            {% if course_survey.question9 != None and course_survey.question9 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question9 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문9 문항 입력해주세요" name="reply9" id="reply9" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 9 end -->
+
+
+            <!-- 설문 문항10 start -->
+            <!-- 질문 -->
+            {% if course_survey.question10 != None and course_survey.question10 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question10 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문10 문항 입력해주세요" name="reply10" id="reply10" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 10 end -->
+
+            <!-- 설문 문항11 start -->
+            <!-- 질문 -->
+            {% if course_survey.question11 != None and course_survey.question11 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question11 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문10 문항 입력해주세요" name="reply11" id="reply11" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 11 end -->
+
+
+            <!-- 설문 문항12 start -->
+            <!-- 질문 -->
+            {% if course_survey.question12 != None and course_survey.question12 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question12 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문10 문항 입력해주세요" name="reply12" id="reply12" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 12 end -->
+
+
+            <!-- 설문 문항13 start -->
+            <!-- 질문 -->
+            {% if course_survey.question13 != None and course_survey.question13 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question13 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문10 문항 입력해주세요" name="reply13" id="reply13" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 13 end -->
+
+
+            <!-- 설문 문항14 start -->
+            <!-- 질문 -->
+            {% if course_survey.question14 != None and course_survey.question14 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question14 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문10 문항 입력해주세요" name="reply14" id="reply14" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 10 end -->
+
+
+            <!-- 설문 문항15 start -->
+            <!-- 질문 -->
+            {% if course_survey.question15 != None and course_survey.question15 != ''  %}
+            <p style="font-size: 25px;">
+                <b>
+                    {{ course_survey.question15 }}
+                </b>
+                
+            </p>
+            
+            <!-- 답변 -->
+            <textarea placeholder="질문10 문항 입력해주세요" name="reply15" id="reply15" rows="5" style="width: 100%;" required></textarea>
+            <br><br>
+            {% endif %}
+
+            <!-- 설문 문항 10 end -->
+
+
+
+            <button class="btn btn-primary" type="submit">제출</button>
+        </form>
+        
+        
+        
+    </div>
+    
+    
+</body>
+</html>

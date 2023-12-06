@@ -1,0 +1,76 @@
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-light">
+  <div class="container-fluid container">
+      <a class="navbar-brand" href="{% url 'home:home' %}"><b>출석 체크</b></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mb-3">
+              {% if user.is_authenticated %}
+                  {% if user.is_staff %}
+                    <!-- staff한테 보여주는 내용 -->
+
+                      <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'home:home' %}">메인 페이지</a>
+                      </li>
+  
+                      <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'user:admin_home' %}">관리자 페이지</a>
+                      </li>
+  
+                      <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'home:logout' %}">로그아웃</a>
+                      </li>
+                      
+                      {% if user.student %}
+                      <span class="navbar-text mr-3">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 환영합니다, <b> {{ user.student }} </b>
+
+                      </span>
+                      {% else %}
+                      <span class="navbar-text mr-3">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 환영합니다, <b> {{ user }} [관리자 계정] </b>
+                      </span>
+                      {% endif %}
+                  {% else %}
+                    <!-- staff가 아닌 일반 사용자한테 보여줄 내용 -->
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'home:home' %}">QR 출석</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user:student_detail' %}">내 정보</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user:student_attendance_detail' %}">내 출석</a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="{% url 'home:logout' %}">로그아웃</a>
+                    </li>
+                    <!-- 환영합니다. XXX 님 보여주기 -->
+                    {% if user.student %}
+                    <span class="navbar-text mr-3">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 환영합니다, <b> {{ user.student }}님 </b>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b> {{ user.student.division }} 과정 수료중입니다.</b>
+                    </span>
+                    {% else %}
+                    <span class="navbar-text mr-3">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 환영합니다, <b> {{ user }} </b>
+                    </span>
+                    {% endif %}
+                
+                  {% endif %}
+              {% else %}
+                <!-- 로그인 안 했을 때 보여주는 내용 -->
+                <li class="nav-item">
+                  <a class="nav-link active" href="{% url 'home:login' %}">로그인</a>
+                </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>

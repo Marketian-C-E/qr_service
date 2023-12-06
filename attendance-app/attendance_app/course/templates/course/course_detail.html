@@ -1,0 +1,57 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ course.course_name }} 상세 페이지</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <a class="btn btn-warning" href="{% url 'course:course_list' course.division_name_id %}" role="button">
+        강의 목록으로
+      </a>
+
+      <br><br><br>
+      상세 페이지
+      <h1><b>{{ course.course_name }}</b></h1>
+      <br>
+      <!-- 대충 기본 정보 -->
+      강사명: {{course.teacher_name }} <br><br>
+      분반 : {{ course.division_name }} <br><br>
+      시작일 : {{ course.start_date }} <br><br>
+      시작 시간 : {{ course.start_at }} <br><br>
+      종료 시간 : {{ course.end_at }} <br><br>
+      총 수업시간 : {{ course.hours}} <br><br>
+
+    
+      <br>
+      <p>전자 출결</p>
+      <a class="btn btn-success" href="{% url 'course:QRScanner_in' course.pk %}" role="button">출입</a>
+      <!-- <a class="btn btn-success" href="{% url 'course:QRScanner_out' course.pk %}" role="button">퇴실</a> -->
+
+      <br><br>
+      <p>관리</p>
+      <a class="btn btn-info" href="{% url 'course:edit_course' course.pk %}" role="button">수정</a>
+    
+      <a class="btn btn-danger" href="{% url 'course:delete_course' course.pk %}" role="button">삭제</a>
+
+      <br>
+      
+      <hr>
+
+      <br>
+
+    
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ course.course_name }} 강의평가 페이지</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+
+      <div class="container d-flex justify-content-between">
+        <a class="btn btn-warning btn-lg" href="{% url 'survey:survey_list' division.pk %}" role="button"> {{division.name}} 분반 강의 목록으로 </a>
+
+        <a class="btn btn-success btn-lg" href="{% url 'survey:download_surveyreply' course.pk %}" role="button">xlsx 다운</a>
+
+      </div>
+
+
+      <br><br><br>
+      상세 페이지
+      <h1><b>{{ course.course_name }}</b></h1>
+    
+      <br>
+        <hr>
+        <!-- 대충 기본 정보 -->
+        <h4> 강의평가 질문 내용 </h4>
+        <!-- 질문 1번 -->
+        {% if survey.question1 %}
+            [1번 문항] {{ survey.question1 }}
+            <br>
+
+        {% else %}
+            [1번 문항] 없음
+            <br>
+
+        {% endif %}
+
+        <!-- 질문 2번 -->
+        {% if survey.question2 %}
+            [2번 문항] {{ survey.question2 }}
+            <br>
+
+        {% else %}
+            [2번 문항] 없음
+            <br>
+
+        {% endif %}
+
+        <!-- 질문 3번 -->
+        {% if survey.question3 %}
+            [3번 문항] {{ survey.question3 }}
+            <br>
+
+        {% else %}
+            [3번 문항] 없음
+            <br>
+
+        {% endif %}
+
+        
+        <br>
+
+        <hr>
+
+        <br>
+        <div class="list-group">
+          <h4> 답변 내용 </h4>
+          <p>클릭해서 설문 답변을 확인해보세요.</p>
+          <br>
+
+          <!-- 작성된 설문이 있을 경우 -->
+          {% if survey_reply %}
+
+            {% for sr in survey_reply %}
+              <a href="{% url 'survey:survey_reply_detail' sr.pk %}" class="list-group-item list-group-item-action">
+                {{ sr }}
+              </a>
+            {% endfor %}
+          
+          <!--  작성된 설문이 없을 경우 -->
+          {% else %}
+              <i style="color: blue">
+                아직 작성된 설문이 없습니다!
+              </i>
+          {% endif %}
+        </div>
+        <hr>
+  </div>
+
+
+</body>
+</html>

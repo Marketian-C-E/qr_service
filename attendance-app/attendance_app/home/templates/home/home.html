@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      .btn {
+        height: 300px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .btn-text {
+        font-size: 61px; 
+
+      }
+
+      .text-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+    </style>
+
+    <title>Home</title>
+
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+
+  <div class="container">
+
+    
+
+    {% if user.is_authenticated %}
+      <!-- 관리자일 때, -->
+      {% if user.is_staff %}
+      <br><br><br><br>
+      <div class="btn-div d-grid gap-2">
+        <a role="button" class="btn btn-secondary" type="button" href="{% url 'user:admin_home' %}">
+          <div class="text-container">
+            <span class="btn-text"><b>관리자 페이지로</b></span>
+          </div>
+        </a>
+      </div>
+
+      <!-- 학생일 때, -->
+      {% else %}
+      <p>현재 수강중인 과목</p>
+      <h3>
+        <b>
+          {{user.student.current_course_name}}
+        </b>
+      </h3>
+      <br>
+      <div class="btn-div d-grid gap-2 ">
+        <a role="button" class="btn btn-success" type="button" href="{% url 'user:show_in_qr' %}">
+          <div class="text-container">
+            <span class="btn-text"><b>입실</b></span>
+          </div>
+        </a>
+        {% if user.student.current_course_name != "수강중인 강의 없음" %}
+          <a role="button" class="btn btn-info" type="button" href="{% url 'survey:survey_student_reply' user.student.pk %}">
+            <div class="text-container">
+              <span class="btn-text"><b>퇴실</b></span>
+
+            </div>
+            
+          </a>
+        {% endif %}
+      </div>
+
+  
+      {% endif %}
+    
+    <!-- 로그인을 안했을 때 -->
+    {% else %}
+    <br><br><br><br>
+    <h1 class="text-center">
+      <b>로그인 하세요</b>
+    </h1>
+    
+    <br><br><br>
+
+    <h3 class="text-center">
+      <a href="{% url 'home:login' %}">로그인 하러가기</a>
+    </h3>
+
+    <br><br>
+    
+    <h3 class="text-center">
+      계정이 없으신가요? 만드세요! 
+
+      <a href="{% url 'user:signup' %}">
+        계정 생성
+      </a>
+    
+    </h3>
+    {% endif %}
+
+
+ 
+  </div>
+
+</body>
+</html>

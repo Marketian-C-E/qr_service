@@ -1,0 +1,35 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>강의 목록</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+
+    <a class="btn btn-secondary" href="{% url 'survey:survey_division_list' %}" role="button">분반 목록으로</a>
+
+    <br><br>
+      <h1><b>{{ division.name }} -- 강의 평가 조회</b></h1>
+
+      <br>
+      원하는 강의를 클릭해서 상세 정보를 확인하세요.
+      <br><br>
+
+      <div class="list-group">
+        {% for c in course %}
+          <a href="{% url 'survey:survey_detail' c.pk %}" class="list-group-item list-group-item-action">
+            [{{ c.division_name }}] <b>{{ c.course_name }}</b> (강사: {{ c.teacher_name }}) 
+          </a>
+        {% endfor %}
+      </div>
+
+  </div>
+</body>
+</html>

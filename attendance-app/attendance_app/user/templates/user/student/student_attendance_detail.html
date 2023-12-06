@@ -1,0 +1,92 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+  
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>내 정보</title>
+</head>
+<body>
+    {% include 'home/navbar.html' %}
+    <br><br><br>
+    <div class="container">
+      <a class="btn btn-secondary" href="{% url 'home:home' %}" role="button">메인 페이지로</a>
+
+      <br><br>
+
+      <h1><b>내 출석</b></h1>
+
+      <br><br>
+      분반: <b>{{ division }}</b>
+      <br><hr><br>
+
+      <table class="table table-striped">
+        <thead>
+            <tr>
+              <th scope="col">강의 이름</th>
+              <th scope="col">입실 시간</th>
+              <th scope="col">퇴실 시간</th>
+              <th scope="col">출석 여부</th>
+
+            </tr>
+          </thead>
+
+          {% for c in course %}
+          <tbody>
+            <tr>
+                <!-- 강의 이름 -->
+                <td>{{ c.course_name }}</td>                
+                <!-- 출석 여부 확인 -->
+                {% for ca in class_attend%}
+                    {% if c.pk == ca.course_id_id %}
+                    <td>
+                      {% if ca.start_at|time:"H:i:s" == '00:00:00'%}
+                      없음
+                      {% else %}
+                      {{ca.start_at}}
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if ca.end_at|time:"H:i:s" == '00:00:00'%}
+                      없음
+                      {% else %}
+                      {{ca.start_at}}
+                      {% endif %}
+                    </td>
+                    <td>
+                        {% if ca.attend_state == 2%}
+                        <b style="color: green;">
+                          O
+                        </b>  
+                        {% elif ca.attend_state  == 1 %}
+                        <b style="color: orange;">
+                          △
+                        </b>
+                        {% elif ca.attend_state  == 0 %}
+                        <b style="color: red;">
+                          X
+                        </b>
+                        {% endif %}
+                    </td>
+                    {% endif %}
+
+                {% endfor %}
+            </tr>
+
+          </tbody>
+          {% endfor %}
+      </table>
+      
+      <br><br><br><br><hr>
+      
+      <!-- 알림 -->
+      <i>* O, △, X 등 표시가 되어있습니다. (출석, 지각, 미출석)</i>
+  </div>
+</body>
+</html>

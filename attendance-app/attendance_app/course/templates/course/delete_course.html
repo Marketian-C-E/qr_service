@@ -1,0 +1,42 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>관리자 페이지</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <h1><b>강좌 삭제</b></h1>
+
+      <br><br><br>
+      
+      <!-- 경고 문구 -->
+      <p>정말로 삭제하시겠습니까?</p>
+
+      <!-- 강의 이름 및 설명 세부 사항 -->
+      <h2><b><i>{{ course.course_name }}</i></h2></b><br>
+
+      강사명: {{course.teacher_name }} <br><br>
+      분반 : {{ course.division_name }} <br><br>
+      시작일 : {{ course.start_date }} <br><br>
+      시작 시간 : {{ course.start_at }} <br><br>
+      총 수업시간 : {{ course.hours}} 시간<br><br>
+      
+      <br><br>
+      
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">삭제</button>
+        <a href="{% url 'course:course_detail' course.pk %}" class="btn btn-warning">취소</a>
+      </form>
+
+
+  </div>
+</body>
+</html>

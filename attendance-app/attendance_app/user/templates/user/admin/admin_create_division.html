@@ -1,0 +1,40 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>관리자 페이지</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <a class="btn btn-danger" href="{% url 'user:division_list' %}" role="button">분반 목록으로</a>
+      
+      <br><br><br>
+      
+      <h1><b>분반 추가</b></h1>
+
+      <br><br><br>      
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="row">
+            <div class="col-3">
+              <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+              {{ field }}
+            </div>
+          </div>
+          <br>
+        {% endfor %}
+  
+        <button type="submit" class="btn btn-primary">분반 생성</button>
+      </form>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>관리자 페이지</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <a class="btn btn-danger" href="{% url 'user:division_list' %}" role="button">분반 목록으로</a>
+      
+      <br><br><br>
+      
+      <h1><b>분반 수정</b></h1>
+
+      <br><br><br>
+
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">수정</button>
+        <a class="btn btn-warning" href="{% url 'user:division_list' %}" role="button">취소</a>
+      </form>
+
+
+  </div>
+</body>
+</html>

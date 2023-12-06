@@ -1,0 +1,31 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>관리자 페이지</title>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+      <h1><b>분반 삭제</b></h1>
+
+      <br><br><br>
+      
+      <p>정말로 삭제하시겠습니까? 해당 분반과 연결된 모든 학생들이 삭제됩니다!</p>
+      <h3>{{ division.name }}</h3>
+      
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">삭제</button>
+        <a href="{% url 'user:division_list' %}" class="btn btn-warning">취소</a>
+      </form>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% load static %}
+<head>
+
+</head>
+<body>
+{% if status == True %}
+<!-- 출석 처리 -->
+<form id="attendanceForm" method="post" action="{% url 'course:attendance_check_in' %}">
+  {% csrf_token %}
+  <input type="hidden" name="course_id" value="{{ course.pk }}">
+  <input type="hidden" name="student_id" value="{{ student.pk }}">
+  <input type="hidden" name="start_at" value="{{ check_time }}">
+  <button type="submit">출석 처리</button>
+</form>
+{% else %} <!-- 이부분 수정 필요 survey 값이 참인지 알아야됌-->
+<!-- 퇴실 처리 -->
+<form id="attendanceForm" method="post" action="{% url 'course:attendance_check_out' %}">
+  {% csrf_token %}
+  <input type="hidden" name="course_id" value="{{ course.pk }}">
+  <input type="hidden" name="student_id" value="{{ student.pk }}">
+  <input type="hidden" name="end_at" value="{{ check_time }}">
+  <button type="submit">퇴실 처리</button>
+</form>
+{% endif %}
+<script>
+  // form 자동 제출
+  document.getElementById('attendanceForm').submit();
+</script>
+</body>

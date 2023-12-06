@@ -1,0 +1,147 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ course.name }} 출석 현황</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  {% include 'home/navbar.html' %}
+  <br><br><br>
+    <div class="container">
+        <br><br>
+      
+        <h1><b>출석 -- {{ course.course_name }} -- 출석 현황</b></h1>
+
+        <br>
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <i style="color: blue;" >
+              * 비대면 출결은 출석 변경을 통해 직접 출석을 기입하셔야합니다.
+            </i>
+
+          </div>
+          <div class="col-md-6 d-flex justify-content-end">
+            <a class="btn btn-success" href="{% url 'course:download_attendance' course.pk %}">엑셀 다운로드</a>
+          </div>
+        </div>
+        
+        <hr><br>
+        
+        <table class="table table-striped">
+            <!--  -->
+            <thead>
+              <tr>
+                <th scope="col">이름</th>
+                <th scope="col">입실 시간</th>
+                <th scope="col">설문조사 제출 시간 (퇴실)</th>
+                <th scope="col">출석 인정</th>
+                <th scope="col">출석 변경</th>
+              </tr>
+            </thead>
+            
+            <!-- 학생 전체 정보 -->
+            {% for student in students %}
+                <tbody>
+                    <tr>
+                        <!-- 학생 이름 -->
+                        <td> {{ student.name }} </td>
+
+                        <!-- 입실 시간 -->
+                        <td>
+                            {% for class_attend in class_attends %}
+                              {% if class_attend.student_id_id == student.id %}
+                                {% if class_attend.start_at|time:"H:i:s" == '00:00:00'%}
+                                  없음
+
+                                {% else %}
+                                  {{ class_attend.start_at|time:"H:i:s" }}
+                              
+                                {% endif%}
+
+                              {% endif %}
+                            {% endfor %}
+                        </td>
+
+                        <!-- 퇴실 시간 -->
+                        <td>
+                            {% for class_attend in class_attends %}
+                              {% if class_attend.student_id.pk == student.id %}
+                                  {% if class_attend.end_at|time:"H:i:s" == '00:00:00'%}
+                                  없음
+
+                                  {% else %}
+                                    {{ class_attend.end_at|time:"H:i:s" }}
+                                    
+                                  {% endif%}
+                                  
+                              {% endif %}
+                            {% endfor %}
+                        </td>
+
+                        <!-- 출석 인정 상태 -->
+                        <td>
+                            {% for class_attend in class_attends %}
+                              {% if class_attend.student_id.pk == student.id %}
+                                {% if class_attend.attend_state == 2%}
+                                <b style="color: green;">
+                                  O
+                                </b>  
+                                {% elif class_attend.attend_state  == 1 %}
+                                <b style="color: orange;">
+                                  △
+                                </b>
+                                {% elif class_attend.attend_state  == 0 %}
+                                <b style="color: red;">
+                                  X
+                                </b>
+                                {% endif %}
+                              {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                          
+                          <form action="{% url 'course:student_attendance_update' %}" method="post" id="search_mode" class="attendance-form">
+                            {% csrf_token %}
+                            <div class="container my-3">
+                              <select name="search_mode" id="search_mode" class="search-mode-select">
+                                <option value="">출결수정</option>
+                                <option value="2">O</option>
+                                <option value="1">△</option>
+                                <option value="0">X</option>
+                                <option value="nftf_in">비대면 입실</option>
+                                <option value="nftf_out">비대면 퇴실</option>
+                              </select>
+                            </div>
+                            <input type="hidden" name="student_id" value="{{ student.id }}">
+                            <input type="hidden" name="course_id" value="{{ course.id }}">
+                          </form>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            {% endfor %}
+            
+          </table>
+
+    
+
+
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".search-mode-select").change(function() {
+        $(this).closest("form").attr("method", "post").submit();
+      });
+    });
+  </script>
+</body>
+
+</html>

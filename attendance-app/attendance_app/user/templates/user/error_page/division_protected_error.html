@@ -1,0 +1,49 @@
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오류-학생이 있는 분반 삭제 오류</title>
+</head>
+<body>
+    <br><br>
+    <div class="container">
+
+        <a href="{% url 'user:division_list' %}" class="btn btn-warning">분반 목록으로 돌아가기</a>
+        <br><br>
+
+        <h1 style="color: red;">
+            <b>[오류 - 삭제 불가]</b> <br>
+            지금 지우려는 분반 목록에 가입되어있는 학생들이 있습니다!
+        </h1>
+        
+        <h3> 정말로 분반 삭제를 원하신다면, 다음 학생들에게 내 정보 수정에 들어가서 분반목록을 변경하라고 해주세요!</h3>
+        
+        <br>
+        <hr>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">이름</th>
+    
+              </tr>
+            </thead>
+            <tbody>
+    
+                {% for my_user in users %}
+                    <tr>
+                        <td>{{ my_user.username }}</td>
+                        <td>{{ my_user.student.name }}</td>
+                    </tr>
+                {% endfor %}
+    
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
